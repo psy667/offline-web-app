@@ -49,9 +49,12 @@ export class MessagesService {
           __typename: "Message",
           user: user,
           text: text,
-          id: -1,
+          id: Math.random() - 1,
           date: "",
         }
+      },
+      context: {
+        serializationKey: 'MUTATION'
       },
       update: (proxy, {data: {createMessage}}) => {
         const data: any = proxy.readQuery({query:  messageQuery});
