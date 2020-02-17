@@ -1,0 +1,17 @@
+body {
+  font-family: monospace;
+  ul > li{
+    list-style: none;
+  }
+  input{
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-color: #999;
+    outline: 0;
+    font-size: 12px;
+    font-family: monospace;
+    &:focus {
+      border-color: #0f0;
+    }
+  }
+}
