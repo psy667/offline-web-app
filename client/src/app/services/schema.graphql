@@ -1,0 +1,8 @@
+
+type Message {
+    user: String
+    text: String
+    image: String
+    id: String!
+    date: Int
+}

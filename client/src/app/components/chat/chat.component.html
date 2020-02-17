@@ -1,0 +1,15 @@
+<label for="username">User: <input id="username" type="text" [(ngModel)]="user"></label>
+<div class="messages">
+    <ul >
+        <li *ngFor="let message of messages$ | async">
+            {{message.date | date:'shortTime'}} <b [ngStyle]="{color: 'blue'}">{{[message.user]}}</b>: {{message.text}} <span *ngIf="message.id < 0">*</span>
+        </li>
+    </ul>
+</div>
+<label for="message"> >
+    <input (keydown.enter)="handleSendMessage()"
+           [(ngModel)]="text" id="message"
+           type="text">
+</label>
+<button (click)="handleUploadFile()">+</button>
+<button (click)="handleSendMessage()">Send</button>
