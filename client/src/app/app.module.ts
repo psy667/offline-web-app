@@ -11,10 +11,10 @@ import { ChatComponent } from './components/chat/chat.component';
 import {FormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ChatComponent
-  ],
+    declarations: [
+        AppComponent,
+        ChatComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -23,7 +23,7 @@ import {FormsModule} from "@angular/forms";
         HttpClientModule,
         FormsModule
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
