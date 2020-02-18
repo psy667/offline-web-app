@@ -33,7 +33,6 @@ export class MessagesService {
             user
             text
             id
-            date
           }
         }
       `,
@@ -49,8 +48,7 @@ export class MessagesService {
           __typename: "Message",
           user: user,
           text: text,
-          id: Math.random() - 1,
-          date: "",
+          id: (Math.random() - 1).toString(16),
         }
       },
       context: {

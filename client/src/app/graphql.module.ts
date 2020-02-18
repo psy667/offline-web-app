@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
-import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {Apollo, APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {resolvers, typeDefs} from "./messages.resolvers";
@@ -9,8 +9,10 @@ import QueueLink from 'apollo-link-queue';
 import SerializingLink from "apollo-link-serialize";
 import {persistCache} from "apollo-cache-persist";
 import {localDatabase} from "./database";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {CommonModule} from "@angular/common";
 
-const uri = 'https://fakeql.com/fragilegraphql/3c5b8e37f4efe04484be1dcdd09525e2'+""; // <-- add the URL of the GraphQL server here
+const uri = 'https://fakeql.com/fragilegraphql/3c5b8e37f4efe04484be1dcdd09525e2'; // <-- add the URL of the GraphQL server here
 
 
 const initialState = {
@@ -33,40 +35,48 @@ window.addEventListener("online", () => {
 });
 
 
-
-const cache = new InMemoryCache();
-
-console.log(1);
-
-persistCache({
-  cache: cache,
-  storage: localStorage,
-});
-
-console.log('2');
-
-export function createApollo(httpLink: HttpLink) {
-  return {
-    link: ApolloLink.from([
+function onStartup(apollo: Apollo, httpLink: HttpLink) {
+  return async  () => {
+    const link = ApolloLink.from([
       queueLink,
       serializingLink,
       retryLink,
       httpLink.create({uri})
-    ]),
-    cache: cache,
-    resolvers,
-    typeDefs,
-  };
+    ]);
+
+    const cache = new InMemoryCache();
+
+
+    await persistCache({
+      cache,
+      storage: localDatabase,
+      trigger: 'write',
+      serialize: false
+    });
+
+    return apollo.create({
+      link,
+      cache: cache,
+    });
+  }
 }
 
 @NgModule({
-  exports: [ApolloModule, HttpLinkModule],
+  exports: [HttpClientModule, ApolloModule, HttpLinkModule],
+  declarations: [],
+  imports: [
+    CommonModule
+  ],
   providers: [
     {
-      provide: APOLLO_OPTIONS,
-      useFactory: createApollo,
-      deps: [HttpLink],
-    },
+      provide: APP_INITIALIZER,
+      useFactory: onStartup,
+      deps: [
+        Apollo,
+        HttpLink,
+      ],
+      multi: true
+    }
   ],
 })
 export class GraphQLModule {}
