@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessagesService} from "../../services/messages.service";
 import {Observable} from "rxjs";
+import {map, switchMap, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-chat',
@@ -18,8 +19,11 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.messages$ = this.messagesService.getMessages()
-
+    this.messagesService.getMessages()
+        .subscribe(r => {
+          this.messages$ = r.data.messages;
+            }
+        )
   }
 
   handleSendMessage() {

@@ -1,7 +1,7 @@
 <label for="username">User: <input id="username" type="text" [(ngModel)]="user"></label>
 <div class="messages">
     <ul >
-        <li *ngFor="let message of messages$ | async">
+        <li *ngFor="let message of messages$">
             {{message.date | date:'shortTime'}} <b [ngStyle]="{color: 'blue'}">{{[message.user]}}</b>: {{message.text}} <span *ngIf="message.id < 0">*</span>
         </li>
     </ul>

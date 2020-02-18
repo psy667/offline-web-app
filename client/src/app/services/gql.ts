@@ -1,6 +1,3 @@
-import {Injectable} from "@angular/core";
-import {Mutation, Query} from "apollo-angular";
-import {Message} from "./interfaces";
 import gql from "graphql-tag";
 
 export const messageQuery = gql`
@@ -11,26 +8,17 @@ export const messageQuery = gql`
             id
         }
     }
+`;
+
+
+export const addMessage = gql`
+    mutation SendMessage($user: String!, $text: String!) {
+       createMessage(input: {user: $user, text: $text, date: "", image: ""}) {
+         __typename
+         user
+         text
+         id
+       }
+     }
 `
 
-@Injectable({
-    providedIn: 'root'
-})
-export class GetMessagesGQL extends Query<Message>{
-    document = messageQuery
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class SendMessageGQL extends Mutation<Message> {
-    document = gql`
-        mutation createMessage{
-            createMessage(input: {user: "", text: "", image: "", date: ""}) {
-                user
-                text
-                id
-            }
-        }
-    `
-}
