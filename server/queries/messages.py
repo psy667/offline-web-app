@@ -1,7 +1,6 @@
+from db_service import database
 from graphene import ObjectType, List, Int, String, Date
 from graphql import ResolveInfo
-
-from db_service import database
 from models.messages import Messages
 
 
@@ -16,10 +15,7 @@ class Message(ObjectType):
 class MessagesQuery(ObjectType):
     messages = List(Message)
 
+    @staticmethod
     async def resolve_messages(self, info: ResolveInfo):
-        query = (
-            Messages
-            .select()
-        )
-
+        query = Messages.select()
         return await database.fetch_all(query)
