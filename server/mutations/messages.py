@@ -1,7 +1,8 @@
-from datetime import date
+import datetime
 
-from db_service import session
-from graphene import ObjectType, Mutation, String, Int, Date
+from db_service import database
+from graphene import ObjectType, Mutation, String, Int, Date, ClientIDMutation
+from graphene_file_upload.scalars import Upload
 from models.messages import Messages
 
 
@@ -11,10 +12,10 @@ class DeleteMessage(Mutation):
 
     id = Int()
 
-    def mutate(self, info, id):
+    async def mutate(self, info, id):
+        query = Messages.delete().where(Messages.c.id == id)
+        await database.execute(query)
         return DeleteMessage(id=id)
-
-
 
 
 class CreateMessage(Mutation):
@@ -29,14 +30,33 @@ class CreateMessage(Mutation):
     id = Int()
     date = Date()
 
-    def mutate(root, info, text, user, image=None):
-        now = date.today()
-        exm = Messages.insert().values(user=user, text=text, image=image, date=now)
-        session.execute(exm)
-        session.commit()
-        return CreateMessage(id=1, date=now, text=text, user=user, image=image)
+    async def mutate(root, info, text, user, image=None):
+        now = datetime.date.today()
+        query = Messages.insert()
+        values = dict(user=user, text=text, image=image, date=now)
+        values.update(id=await database.execute(query=query, values=values))
+        return values
+
+
+class UploadFile(ClientIDMutation):
+    class Input:
+        pass
+        # nothing needed for uploading file
+
+    # your return fields
+    success = String()
+
+
+    @classmethod
+    def mutate_and_get_payload(cls, root, info, **input):
+        files = info.context.FILES
+
+        # do something with files
+
+        return UploadFile(success=True)
 
 
 class MessagesMutations(ObjectType):
     create_message = CreateMessage.Field()
     delete_message = DeleteMessage.Field()
+    upload_file = UploadFile.Field()

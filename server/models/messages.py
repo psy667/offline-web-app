@@ -1,6 +1,5 @@
-from sqlalchemy import *
-
 from db import metadata
+from sqlalchemy import *
 
 Messages = Table(
     "messages",

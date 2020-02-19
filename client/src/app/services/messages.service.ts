@@ -70,4 +70,18 @@ export class MessagesService {
   sendMessage2() {
     this.apollo.getClient()
   }
+
+  uploadFile(file) {
+    this.apollo.mutate({mutation: gql`
+        mutation uploadFile($file: Upload){
+            uploadFile(file: $file) {
+                success
+            }
+        }
+    `,
+      variables: {
+        file,
+      }
+      }).subscribe()
+  }
 }

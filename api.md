@@ -1,5 +1,5 @@
 ```mutation createMessage {
-  createMessage(input: {user: "", text: "", image: "", date: ""}) {
+  createMessage(input: {user: "", text: "", image?: ""}) {
     user
     text
     image

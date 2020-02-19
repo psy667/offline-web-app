@@ -13,3 +13,8 @@
 </label>
 <button (click)="handleUploadFile()">+</button>
 <button (click)="handleSendMessage()">Send</button>
+<input
+        type="file"
+        id="file"
+        (change)="handleFileInput($event.target.files)">
+>
