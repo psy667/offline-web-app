@@ -1,7 +1,9 @@
+import os
+
 import datetime
 
 from db_service import database
-from graphene import ObjectType, Mutation, String, Int, Date, ClientIDMutation
+from graphene import ObjectType, Mutation, String, Int, Date, ClientIDMutation, Boolean
 from graphene_file_upload.scalars import Upload
 from models.messages import Messages
 
@@ -41,19 +43,22 @@ class CreateMessage(Mutation):
 class UploadFile(ClientIDMutation):
     class Input:
         pass
-        # nothing needed for uploading file
 
-    # your return fields
-    success = String()
-
+    success = Boolean()
 
     @classmethod
     def mutate_and_get_payload(cls, root, info, **input):
         files = info.context.FILES
 
-        # do something with files
-
         return UploadFile(success=True)
+
+
+    # def mutate(self, info,  file=None):
+    #     # print(file.name)
+    #     base_dir = os.path.dirname(__file__)
+    #     # do something with files
+    #
+    #     return UploadFile(success=True)
 
 
 class MessagesMutations(ObjectType):
