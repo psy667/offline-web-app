@@ -1,19 +1,20 @@
 import gql from "graphql-tag";
 
-export const messageQuery = gql`
-    query getMessages {
+export const GET_MESSAGES = gql`
+    query messages {
         messages {
             user
             text
+            image
             id
         }
     }
 `;
 
 
-export const addMessage = gql`
-    mutation SendMessage($user: String!, $text: String!, $file: Upload) {
-       createMessage(input: {user: $user, text: $text, date: "", image: $file}) {
+export const ADD_MESSAGE = gql`
+    mutation createMessage($user: String!, $text: String!) {
+       createMessage(input: {user: $user, text: $text, date: "", image: "$image"}) {
          user
          text
          id

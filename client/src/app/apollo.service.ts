@@ -10,9 +10,10 @@ import {
 import {MessageCacheUpdates} from "./cacheUpdates";
 
 // import { GreetingCacheUpdates } from '../common/cacheUpdates';
+const offline = 0;
 
-const uri = 'https://fakeql.com/fragilegraphql/3c5b8e37f4efe04484be1dcdd09525e2'+"";
-const uriws = 'ws://fakeql.com/fragilegraphql/3c5b8e37f4efe04484be1dcdd09525e2'+"";
+const uri = 'https://fakeql.com/fragilegraphql/3c5b8e37f4efe04484be1dcdd09525e2'.slice(offline);
+const uriws = 'ws://fakeql.com/fragilegraphql/3c5b8e37f4efe04484be1dcdd09525e2'.slice(offline);
 
 @Injectable({
     providedIn: 'root'

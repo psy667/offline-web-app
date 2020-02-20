@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ApolloService} from "../apollo.service";
 import {Observable} from "rxjs";
-import {addMessage, messageQuery} from "./gql";
 import {ApolloOfflineStore} from "offix-client-boost";
 import {createMutationOptions} from "offix-cache";
+import {ADD_MESSAGE, GET_MESSAGES} from "./gql";
 
 @Injectable({
     providedIn: 'root'
@@ -24,34 +24,34 @@ export class MessagesService {
     getMessages(): Observable<any> {
         return this.apollo
             .watchQuery({
-                query: messageQuery,
+                query: GET_MESSAGES,
                 fetchPolicy: 'cache-first',
 
             })
     }
 
-
-
-    sendMessage(user, text, file) {
+    sendMessage(user, text, image) {
         const options = createMutationOptions({
-            mutation: addMessage,
+            mutation: ADD_MESSAGE,
             variables: {
                 user,
                 text,
-                file,
+                image,
                 id: -1,
             },
-            updateQuery: messageQuery,
+            updateQuery: GET_MESSAGES,
             returnType: 'Message',
+            idField: 'id',
         });
 
         this.apollo.offlineMutate(options).catch(err => {
             console.log(err);
+            err.watchOfflineChange().then(r => console.log(r))
         })
     }
     sendMessage2(user, text) {
         this.apollo.mutate({
-            mutation: addMessage,
+            mutation: ADD_MESSAGE,
             variables: {
                 user,
                 text,
@@ -103,7 +103,7 @@ export class MessagesService {
 
     async refreshMessages() {
         return this.apollo.query({
-            query: messageQuery,
+            query: GET_MESSAGES,
             fetchPolicy: 'network-only'
         })
     }

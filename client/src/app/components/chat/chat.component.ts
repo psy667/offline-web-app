@@ -32,9 +32,9 @@ export class ChatComponent implements OnInit {
   }
 
   private async loadData() {
-    await this.messagesService.refreshMessages().catch(() => {
-      console.log('Cannot refresh messages from server');
-    });;
+    // await this.messagesService.refreshMessages().catch(() => {
+    //   console.log('Cannot refresh messages from server');
+    // });;
 
     this.messagesService.getMessages().subscribe(result => {
       this.messages$ = result.data && result.data.messages;
@@ -54,7 +54,7 @@ export class ChatComponent implements OnInit {
 
   handleUploadFile($event) {
     const files = $event.target.files;
-    // console.log(files)
+    console.log(files[0])
     this.file = files[0];
   }
 }
