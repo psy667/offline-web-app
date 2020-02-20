@@ -7,6 +7,7 @@ import {
     ApolloOfflineStore,
     OffixBoostOptions
 } from 'offix-client-boost';
+import {MessageCacheUpdates} from "./cacheUpdates";
 
 // import { GreetingCacheUpdates } from '../common/cacheUpdates';
 
@@ -38,7 +39,8 @@ export class ApolloService {
         const options: OffixBoostOptions = {
             httpUrl: uri,
             wsUrl: uriws,
-            // mutationCacheUpdates: GreetingCacheUpdates
+            mutationCacheUpdates: MessageCacheUpdates,
+            fileUpload: true,
         };
 
         const offlineClient = await createClient(options);

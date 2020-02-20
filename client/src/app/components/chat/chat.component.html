@@ -1,8 +1,8 @@
 <label for="username">User: <input id="username" type="text" [(ngModel)]="user"></label>
-<div class="messages">
+<div class="messages" #messagesContainer>
     <ul >
         <li *ngFor="let message of messages$">
-            {{message.date | date:'shortTime'}} <b [ngStyle]="{color: 'blue'}">{{[message.user]}}</b>: {{message.text}} <span *ngIf="message.id < 0">*</span>
+            {{message.date | date:'shortTime'}} <b>{{[message.user]}}</b>: {{message.text}} <span *ngIf="message.id < 0">*</span>
         </li>
     </ul>
 </div>
@@ -11,5 +11,9 @@
            [(ngModel)]="text" id="message"
            type="text">
 </label>
-<button (click)="handleUploadFile()">+</button>
+<label>
+    +
+    <input type="file" (input)="handleUploadFile($event)">
+</label>
+
 <button (click)="handleSendMessage()">Send</button>

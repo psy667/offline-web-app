@@ -1,17 +1,38 @@
 body {
   font-family: monospace;
+  background: #222;
+  color: #ddd;
   ul > li{
     list-style: none;
+    b{
+      color: #6a37af;
+    }
+
+  }
+  .messages{
+    max-height: 300px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar{
+      filter: invert(0);
+    }
+  }
+  button{
+    background-color: #555;
+    border: 1px solid black;
+
   }
   input{
+    background-color: #222;
     border-width: 0;
     border-bottom-width: 1px;
-    border-color: #999;
+    border-color: #444;
     outline: 0;
     font-size: 12px;
+    color: #fff;
     font-family: monospace;
     &:focus {
       border-color: #0f0;
     }
   }
+
 }
