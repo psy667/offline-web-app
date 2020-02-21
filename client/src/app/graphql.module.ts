@@ -12,7 +12,7 @@ import {localDatabase} from "./database";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 
-const uri = 'https://fakeql.com/fragilegraphql/3c5b8e37f4efe04484be1dcdd09525e2'; // <-- add the URL of the GraphQL server here
+const uri = 'http://localhost:8000/'; // <-- add the URL of the GraphQL server here
 
 
 const initialState = {
@@ -65,7 +65,7 @@ function onStartup(apollo: Apollo, httpLink: HttpLink) {
   exports: [HttpClientModule, ApolloModule, HttpLinkModule],
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   providers: [
     {

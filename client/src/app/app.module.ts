@@ -9,6 +9,7 @@ import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from './components/chat/chat.component';
 import {FormsModule} from "@angular/forms";
+import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import {FormsModule} from "@angular/forms";
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
         GraphQLModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        HttpLinkModule
     ],
     providers: [],
     bootstrap: [AppComponent]

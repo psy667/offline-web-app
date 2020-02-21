@@ -34,6 +34,7 @@ export class ChatComponent implements OnInit {
   }
 
   handleFileInput(files: FileList) {
+    console.log(files.item(0));
     this.messagesService.uploadFile(files.item(0))
    }
 }

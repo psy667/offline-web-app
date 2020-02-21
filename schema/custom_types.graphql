@@ -1,0 +1,11 @@
+type Message {
+    id: Int
+    user: String
+    text: String
+    image: String
+    date: String
+}
+
+type Id {
+    id: Int
+}

@@ -1,0 +1,4 @@
+type Mutation {
+    createMessage(text: String!, image: Upload, user: String!): Message
+    deleteMessage(id: Int!): Id
+}

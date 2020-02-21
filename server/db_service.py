@@ -6,7 +6,6 @@ from models.messages import *
 from starlette.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

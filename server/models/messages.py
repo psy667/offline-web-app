@@ -8,5 +8,5 @@ Messages = Table(
     Column("user", String),
     Column("text", String),
     Column("image", String),
-    Column("date", Date),
+    Column("date", TIMESTAMP, default=func.current_timestamp()),
 )

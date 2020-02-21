@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import {GetMessagesGQL, messageQuery} from "./gql";
 import {map} from "rxjs/operators";
 import {ApolloQueryResult} from "apollo-client";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class MessagesService {
   constructor(
       private apollo: Apollo,
       private getMessagesGQL: GetMessagesGQL,
+      // private http: HttpClient,
   ) { }
 
   getMessages() {
@@ -28,19 +30,18 @@ export class MessagesService {
     this.apollo.mutate({
       mutation: gql`
         mutation SendMessage($user: String!, $text: String!) {
-          createMessage(input: {user: $user, text: $text, date: "", image: ""}) {
+          createMessage(user: $user, text: $text) {
             __typename
             user
             text
             id
+            date
           }
         }
       `,
       variables: {
         user,
-        text,
-        id: Math.random().toString(16).slice(2),
-
+        text
       },
       optimisticResponse: {
         __typename: 'Mutation',
@@ -50,9 +51,6 @@ export class MessagesService {
           text: text,
           id: (Math.random() - 1).toString(16),
         }
-      },
-      context: {
-        serializationKey: 'MUTATION'
       },
       update: (proxy, {data: {createMessage}}) => {
         const data: any = proxy.readQuery({query:  messageQuery});
@@ -72,8 +70,33 @@ export class MessagesService {
   }
 
   uploadFile(file) {
+    // const operations = {
+    //   query: `
+    //     mutation($file: Upload!) {
+    //       singleUpload(file: $file) {
+    //         id
+    //       }
+    //     }
+    //   `,
+    //   variables: {
+    //     file: null
+    //   }
+    // };
+    //
+    // const _map = {
+    //   file: ["variables.file"]
+    // };
+    //
+    // const fd = new FormData();
+    //
+    // fd.append('operations', JSON.stringify(operations));
+    // fd.append('map', JSON.stringify(_map));
+    // fd.append('file', file, file.name);
+    //
+    // this.http.post("http://localhost:8000/messages", fd).subscribe();
+
     this.apollo.mutate({mutation: gql`
-        mutation uploadFile($file: Upload){
+        mutation uploadFile($file: Upload!){
             uploadFile(file: $file) {
                 success
             }
@@ -81,6 +104,9 @@ export class MessagesService {
     `,
       variables: {
         file,
+      },
+      context: {
+        useMultipart: true
       }
       }).subscribe()
   }
