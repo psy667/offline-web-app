@@ -12,7 +12,7 @@ import {localDatabase} from "./database";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 
-const uri = 'http://localhost:8000/graphql'; // <-- add the URL of the GraphQL server here
+const uri = 'http://localhost:8000/'; // <-- add the URL of the GraphQL server here
 
 
 const initialState = {
