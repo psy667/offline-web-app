@@ -7,7 +7,7 @@ mutation = MutationType()
 
 
 @mutation.field("createMessage")
-async def resolve_create_message(_, info, text: str, user: str, image: UploadFile = None):
+async def resolve_create_message(*_, text, user, image: UploadFile = None):
     query_insert = Messages.insert()
     filename = ""
 
