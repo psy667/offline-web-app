@@ -1,11 +1,11 @@
 import databases
 import sqlalchemy
 from env import BASE_DIR
-from fastapi import FastAPI
 from models.messages import *
+from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = Starlette()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

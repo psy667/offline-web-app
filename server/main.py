@@ -5,8 +5,9 @@ from mutations.main import mutation
 from queries.main import query
 from schema import type_defs
 from starlette.staticfiles import StaticFiles
+from subscriptions.main import subscription
 
-schema = make_executable_schema(type_defs, [query, mutation, upload_scalar])
+schema = make_executable_schema(type_defs, query, mutation, subscription, upload_scalar)
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 app.mount("/", GraphQL(schema, debug=True))
