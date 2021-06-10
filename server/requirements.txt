@@ -10,7 +10,7 @@ Click==7.0
 databases==0.2.6
 dnspython==1.16.0
 email-validator==1.0.5
-fastapi==0.49.0
+fastapi==0.65.2
 graphql-core==3.0.3
 graphql-relay==2.0.1
 h11==0.9.0
