@@ -4,7 +4,7 @@ aniso8601==7.0.0
 ariadne==0.10.0
 async-exit-stack==1.0.1
 async-generator==1.10
-certifi==2019.11.28
+certifi==2022.12.7
 chardet==3.0.4
 Click==7.0
 databases==0.2.6
